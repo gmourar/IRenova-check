@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 
-const QuartoCheck = () => {
+const CheckList = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [descriptions, setDescriptions] = useState({});
   const [userList , setUserList] = useState([])
@@ -135,5 +135,5 @@ const QuartoCheck = () => {
   );
 };
 
-export default QuartoCheck;
+export default CheckList;
 
