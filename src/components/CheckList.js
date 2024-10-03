@@ -106,7 +106,7 @@ const CheckList = () => {
           ))}
 
           <Button
-            variant="primary"
+            variant="dark"
             className="w-100 mt-4 shadow-sm"
             onClick={handleSubmit}
           >
