@@ -65,14 +65,6 @@ const Login = () => {
             >
               Login
             </Button>
-
-            <Button 
-              variant="link" 
-              className="w-100 mt-3 text-center" 
-              onClick={handleRegister}
-            >
-              Registre-se
-            </Button>
           </Form>
         </Card.Body>
       </Card>
