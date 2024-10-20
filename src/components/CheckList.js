@@ -1,32 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import axios from 'axios';
+import '../assets/img_checklist.svg'; // Importando a imagem do topo
+import '../css/Checklist.css'; // Importando o arquivo CSS
 
 const CheckList = () => {
   const [selectedItems, setSelectedItems] = useState({});
-  const [descriptions, setDescriptions] = useState({});
   const [checklistItems, setChecklistItems] = useState([]); 
   const [title, setTitle] = useState('');
   
   const ip = 'http://26.121.130.48:8080';
-  const check_id = 'cc21b860-db95-4386-b12c-285aeb756700'
+  const check_id = 'cc21b860-db95-4386-b12c-285aeb756700';
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${ip}/api/checklists/${check_id}`);
-        console.log('Resposta recebida:', res.data);
-        
-        setTitle(res.data.title); 
-        setChecklistItems(res.data.items); 
-      } catch (error) {
-        console.error('Erro ao buscar dados:', error);
-      }
-    };
-
-    fetchData();
-  }, []);  
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(`${ip}/api/checklists/${check_id}`);
+  //       setTitle(res.data.title); 
+  //       setChecklistItems(res.data.items); 
+  //     } catch (error) {
+  //       console.error('Erro ao buscar dados:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);  
 
   const handleItemClick = (itemId, status) => {
     setSelectedItems(prevState => ({
@@ -35,19 +32,10 @@ const CheckList = () => {
     }));
   };
 
-  const handleDescriptionChange = (itemId, text) => {
-    setDescriptions(prevState => ({
-      ...prevState,
-      [itemId]: text
-    }));
-  };
-
   const handleSubmit = () => {
     const isConfirmed = window.confirm("Tem certeza que deseja enviar o checklist?");
-    
     if (isConfirmed) {
       console.log('Itens selecionados:', selectedItems);
-      console.log('Descrições:', descriptions);
       alert("Checklist enviado!");
     } else {
       alert("Envio cancelado.");
@@ -55,64 +43,60 @@ const CheckList = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card style={{ width: '100%', maxWidth: '500px', height: '90vh' }} className="p-6 shadow-lg rounded">
-        <Card.Header className="text-center bg-light text-dark rounded">
-          <h4>{title}</h4> 
+    <Container className="checklist-container d-flex justify-content-center align-items-center vh-100">
+      <Card className="checklist-card shadow-lg">
+        {/* Imagem de topo */}
+        <div className="checklist-header">
+          <img src={require('../assets/img_checklist.svg').default} alt="Checklist header" className="checklist-image" />
+        </div>
+
+        {/* Título e subtítulo */}
+        <Card.Header className="text-center bg-white checklist-titles">
+          <h4 className="checklist-title">CHECKLIST</h4>
+          <h5 className="checklist-subtitle">QUARTO</h5>
         </Card.Header>
 
-        <Card.Body style={{ overflowY: 'auto' }}>
-          {checklistItems.map((item, index) => (
-            <div key={item.id} className="mb-2 p-4  rounded" style={{ backgroundColor: '#f8f9fa' }}>
+        <Card.Body className="checklist-body">
+          {checklistItems.map((item) => (
+            <div key={item.id} className="checklist-item">
               <Row className="align-items-center">
                 <Col xs={6}>
-                  <span className="fs-5 fw-semibold">{item.name}</span> 
+                  <span className="checklist-item-name">{item.name}</span>
                 </Col>
                 <Col xs={3} className="text-center">
                   <Button
-                    variant="outline-danger"
-                    className={`rounded${selectedItems[item.id] === 'unchecked' ? 'border-danger bg-danger text-white' : ''}`}
-                    style={{ width: '60px', height: '50px' }}
+                    variant="light"
+                    className={`checklist-btn ${selectedItems[item.id] === 'unchecked' ? 'btn-unchecked' : ''}`}
                     onClick={() => handleItemClick(item.id, 'unchecked')}
                   >
-                    
+                    ✕
                   </Button>
                 </Col>
                 <Col xs={3} className="text-center">
                   <Button
-                    variant="outline-success"
-                    className={`rounded ${selectedItems[item.id] === 'checked' ? 'border-success bg-success text-white' : ''}`}
-                    style={{ width: '60px', height: '50px' }}
+                    variant="light"
+                    className={`checklist-btn ${selectedItems[item.id] === 'checked' ? 'btn-checked' : ''}`}
                     onClick={() => handleItemClick(item.id, 'checked')}
                   >
-                   
+                    ✓
                   </Button>
                 </Col>
               </Row>
-
-              
-              {selectedItems[item.id] === 'unchecked' && (
-                <Form.Group className="mt-3">
-                  <Form.Control
-                    type="text"
-                    placeholder="Descreva o motivo"
-                    value={descriptions[item.id] || ''}
-                    onChange={(e) => handleDescriptionChange(item.id, e.target.value)}
-                    className="shadow-sm"
-                  />
-                </Form.Group>
-              )}
             </div>
           ))}
 
-          <Button
-            variant="dark"
-            className="w-100 mt-4 shadow-sm"
-            onClick={handleSubmit}
-          >
+          {/* Botão Enviar */}
+          <Button variant="primary" className="checklist-submit" onClick={handleSubmit}>
             Enviar
           </Button>
         </Card.Body>
+
+        {/* Botão Sair */}
+        <Card.Footer className="text-center checklist-footer">
+          <Button variant="light" className="checklist-exit">
+            Sair
+          </Button>
+        </Card.Footer>
       </Card>
     </Container>
   );

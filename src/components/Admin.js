@@ -46,7 +46,7 @@ export class Admin extends Component {
                   <Card.Text>
                     Gerenciar o checklist do quarto.
                   </Card.Text>
-                  <Button variant="dark">Ver Checklist</Button>
+                  <Button variant="dark">Gerenciar</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -57,7 +57,7 @@ export class Admin extends Component {
                   <Card.Text>
                     Gerenciar o checklist da sala.
                   </Card.Text>
-                  <Button variant="dark">Ver Checklist</Button>
+                  <Button variant="dark">Gerenciar</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -68,7 +68,7 @@ export class Admin extends Component {
                   <Card.Text>
                     Gerenciar o checklist da cozinha.
                   </Card.Text>
-                  <Button variant="dark">Ver Checklist</Button>
+                  <Button variant="dark">Gerenciar</Button>
                 </Card.Body>
               </Card>
             </Col>
